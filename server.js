@@ -5,28 +5,27 @@ const path = require("path")
 const express = require("express")
 const cors = require("cors")
 const bodyParser = require("body-parser")
-// const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 require("dotenv").config({ path: path.resolve(__dirname, ".env"), })
 
 
 ///////////////////////////////////////////////////////////
 //  Configure and connect to MongoDB database
 ///////////////////////////////////////////////////////////
-// const dbconf = require("./db.js")
-// mongoose.Promise = global.Promise
-// mongoose
-//   .connect(dbconf.url, dbconf.options)
-//   .catch(({ message, }) => {
-//     console.error(`Unable to connect to the mongodb instance: ${message}`)
-//   })
+mongoose.Promise = global.Promise
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true })
+  .catch(({ message }) => {
+    console.error(`Unable to connect to the mongodb instance: ${message}`)
+  }
+)
 
-// const db = mongoose.connection
-// db.on("error", ({ message, }) => {
-//   console.error(`Mongoose default connection error: ${message}`)
-// })
-// db.once("open", () => {
-//   console.info(`Mongoose default connection opened [${dbconf.db}]`)
-// })
+const db = mongoose.connection
+db.on("error", ({ message }) => {
+  console.error(`Mongoose default connection error: ${message}`)
+})
+db.once("open", () => {
+  console.info(`Mongoose default connection opened`)
+})
 
 
 ///////////////////////////////////////////////////////////
@@ -47,10 +46,11 @@ app.use(bodyParser.json())
 // Handle cross-site request
 app.use(cors())
 
+
 ///////////////////////////////////////////////////////////
 //  Import Express Routes
 ///////////////////////////////////////////////////////////
-require("./routes.js")
+require("./routes")(app);
 
 
 ///////////////////////////////////////////////////////////
