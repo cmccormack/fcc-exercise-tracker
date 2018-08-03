@@ -26,12 +26,18 @@
     <h1>Exercise Tracker</h1>
   </header>
   <main>
-    <div id="create_user">
-      { create_user instructions/examples go here }
-    </div>
-    <div id="add_exercise">
-      { add_exercise instructions/examples go here }
-    </div>
+    <section id="create_user">
+      <span class="section-title">Create a New User</span>
+      <pre>POST /api/new-user</pre>
+      <form id="new-user-form" action="/api/new-user" method="POST">
+        <input type="text" placeholder="username" name="username" />
+        <button type="submit" class="submit-btn">Register</button>
+      </form>
+    </section>
+    <section id="add_exercise">
+      <span class="section-title">Add Exercises</span>
+      <pre>POST /api/add-exercise</pre>
+    </section>
   </main>
 </body>
 
