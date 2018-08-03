@@ -5,12 +5,14 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true,
   },
   exercises:{
     type:Array,
-    default:[]
+    default:[],
   }
 })
+
 
 module.exports = mongoose.model('userModel', userSchema);
