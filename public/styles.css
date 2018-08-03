@@ -38,7 +38,7 @@ section {
   font-weight: 400;
 }
 
-#new-user-form input {
+#new-user-form input, #add-exercise-form input {
   padding: .3rem;
   border: none;
   border: 2px solid black;
@@ -57,4 +57,9 @@ pre {
   background-color: #f9dd76;
   padding: 2px 8px;
   border-radius: 2px;
+}
+
+.input-row {
+  display: block;
+  margin: 10px;
 }

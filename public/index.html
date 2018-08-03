@@ -37,6 +37,13 @@
     <section id="add_exercise">
       <span class="section-title">Add Exercises</span>
       <pre>POST /api/add-exercise</pre>
+      <form id="add-exercise-form" action="/api/add-exercise" method="POST">
+        <div class="input-row"><input type="text" placeholder="username" name="username" /></div>
+        <div class="input-row"><input type="text" placeholder="description" name="description" /> </div>
+        <div class="input-row"><input type="text" placeholder="duration (minutes)" name="duration" /> </div>
+        <div class="input-row"><input type="date" placeholder="date" name="date" /> </div>
+        <button type="submit" class="submit-btn">Log Exercise</button>
+      </form>
     </section>
   </main>
 </body>
