@@ -10,28 +10,51 @@ body {
 }
 
 header h1 {
-  color: forestgreen;
+  color: teal;
   font-weight: 300;
   font-size: 4rem;
-  margin-bottom: 4rem;
+  margin: 3rem 0;
 }
 
 main {
   flex: 1 0 auto;
-  min-width: 800px;
-  background-color: orange;
-  border: 2px solid brown;
-  border-radius: 8px;
-  padding: 2rem;
 
   display: flex;
   flex-direction: column;
 }
 
-main #create_user, main #add_exercise {
+section {
   background-color: lightseagreen;
   border: 1px solid darkgreen;
   padding: 1.5rem;
   border-radius: 4px;
-  margin: 10px 0;
+  margin-bottom: 30px;
+}
+
+.section-title {
+  display: block;
+  margin: .5rem 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+#new-user-form input {
+  padding: .3rem;
+  border: none;
+  border: 2px solid black;
+  width: 500px;
+}
+
+.submit-btn {
+  background: teal;
+  color: white;
+  padding: .3rem;
+  border: 2px solid black;;
+}
+
+pre {
+  display: inline-block;
+  background-color: #f9dd76;
+  padding: 2px 8px;
+  border-radius: 2px;
 }
