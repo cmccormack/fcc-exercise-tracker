@@ -8,10 +8,11 @@ var userSchema = new Schema({
     required: true,
     unique: true,
   },
-  exercises:{
-    type:Array,
-    default:[],
-  }
+  exercises: [{
+    description: String,
+    duration: Number,
+    date: Date,
+  }]
 })
 
 
