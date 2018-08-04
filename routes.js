@@ -22,7 +22,7 @@ module.exports = function(app) {
 
 
   ///////////////////////////////////////////////////////////
-  // Default Route Handler
+  // Root Route Handler
   ///////////////////////////////////////////////////////////
   app.get('/', (req, res, next) => {
     res.sendFile(path.join(publicPath, 'index.html'))
@@ -35,6 +35,16 @@ module.exports = function(app) {
       if (err) next(new Error(err))
       res.json(users)
     })
+  })
+
+  // Debug route to view single user in DB
+  app.get("/api/users/:username", (req, res, next) => {
+    const { username } = req.params
+    User.findOne({username}, { _id: 0, username: 1, exercises: 1 })
+      .exec((err, {username, exercises}) => {
+        if (err) next(new Error(err))
+        res.json({username, exercises})
+      })
   })
 
   //Route for creating user
@@ -58,7 +68,7 @@ module.exports = function(app) {
   })
 
   //Route for submitting exercise
-  app.post('/api/add-exercise', (req, res, next) => {
+  app.post('/api/add-exercise', /* Add validation middleware */ (req, res, next) => {
     const { username, description, duration, date } = req.body
     const newExercise = {
       description : description,
@@ -96,8 +106,12 @@ module.exports = function(app) {
 
   */
 
+
+  ///////////////////////////////////////////////////////////
+  // Default Route Handler
+  ///////////////////////////////////////////////////////////
   app.get('*', (req, res, next) => {
-    res.sendFile(path.join(publicPath, 'index.html'))
+    res.redirect('/')
   });
 
 
