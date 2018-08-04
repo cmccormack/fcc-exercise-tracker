@@ -28,29 +28,6 @@ module.exports = function(app) {
     res.sendFile(path.join(publicPath, 'index.html'))
   });
 
-  //this works for creating a user - can be deleted
-  app.get('/test', (req, res, next) => {
-    const newUser = new User({
-      username: "me"
-    })
-
-    newUser.save().then(() => {
-      console.log(`user "me" created`);
-      res.send(`user created`);
-    }).catch(e => {
-      console.log(e);
-      res.send(e);
-    })
-  });
-
-  /*route for creating user
-  .post /api/new-user - req, res =>
-    check if user exists in db
-    -if so respond with error or something
-    -if not respond with success
-
-  */
-
   // Debug route to view users in DB
   app.get("/api/users", (req, res, next) => {
     User.find({})
@@ -60,6 +37,7 @@ module.exports = function(app) {
     })
   })
 
+  //Route for creating user
   app.post('/api/new-user', (req, res, next) => {
     const { username } = req.body
     const newUser = new User({ username })
@@ -79,16 +57,36 @@ module.exports = function(app) {
     })
   })
 
+  //Route for submitting exercise
+  app.post('/api/add-exercise', (req, res, next) => {
+    const { username, description, duration, date } = req.body
+    const newExercise = {
+      description : description,
+      duration : duration,
+      date: date
+    }
 
-  /*route for submitting exercise
-    .post /api/add-exercise - req, res =>
-    Check if id or username/password match
-    Add exercise to db => send success message?
-    Error response if not
-
-  */
-
-
+    User.findOne({ username: username }, function (err, data) {
+      if(err) {
+        return next(new Error(`Something went wrong`))
+      }
+      if(data === null) {
+        return next(new Error(`Username ${username} not found`))
+      }
+      
+      data.exercises.push(newExercise)
+      data.save((err, data) => {
+        if (err) {
+          return next(new Error(`Could not save data`))
+        }
+        return res.json({
+          success: true,
+          message: `Exercise successfully added`
+        })
+      })
+    })
+  })
+  
   /*route for retrieving user/exercise info
     GET /exercise/log?{userId}[&from][&to][&limit]
   .get - req, res => 
@@ -97,6 +95,10 @@ module.exports = function(app) {
   respond with json info if found
 
   */
+
+  app.get('*', (req, res, next) => {
+    res.sendFile(path.join(publicPath, 'index.html'))
+  });
 
 
   ///////////////////////////////////////////////////////////
