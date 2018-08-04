@@ -30,5 +30,8 @@
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "mongoose": "^5.2.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
   }
 }
