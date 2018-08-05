@@ -38,16 +38,23 @@
     </section>
     <section id="add_exercise">
       <span class="section-title">Add Exercises</span>
-      <pre>POST /api/add-exercise</pre>
-      <form id="add-exercise-form" action="/api/add-exercise" method="POST">
+      <pre>POST /api/exercise/add</pre>
+      <form id="add-exercise-form" action="/api/exercise/add" method="POST">
         <div class="input-row"><input type="text" placeholder="username" name="username" minlength="3" maxlength="20" required /></div>
         <div class="input-row"><input type="text" placeholder="description" name="description" minlength="3" maxlength="50" required /> </div>
         <div class="input-row"><input type="number" placeholder="duration (minutes)" name="duration" min="1" max="9999" required /> </div>
-        <div class="input-row"><input type="date" placeholder="date" name="date" min="1970-01-01" max="2999-12-31" required /> </div>
+        <div class="input-row"><input type="date" placeholder="date" name="date" min="1970-01-01" max="2999-12-31" required id="date"/> </div>
         <button type="submit" class="submit-btn">Log Exercise</button>
       </form>
     </section>
   </main>
+
+  <script>
+    // Set the placeholder in the exercise date to today
+    const today = new Date()
+    today.setMinutes(today.getMinutes() - today.getTimezoneOffset())
+    document.getElementById("date").value = today.toJSON().slice(0, 10)
+  </script>
 </body>
 
 </html>
