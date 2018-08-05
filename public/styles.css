@@ -18,7 +18,7 @@ header h1 {
 
 main {
   flex: 1 0 auto;
-
+  max-width: 583px;
   display: flex;
   flex-direction: column;
 }
@@ -38,7 +38,7 @@ section {
   font-weight: 400;
 }
 
-#new-user-form input, #add-exercise-form input {
+#new-user-form input, #add-exercise-form input, #query-form input {
   padding: .3rem;
   border: none;
   border: 2px solid black;
@@ -63,4 +63,12 @@ pre {
 .input-row {
   display: block;
   margin: 10px;
+}
+
+a {
+  text-decoration: none;
+  box-decoration-break: clone;
+  background-color: lightblue;
+  padding: 2px 8px;
+  border-radius: 2px;
 }
