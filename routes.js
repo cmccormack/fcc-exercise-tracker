@@ -140,7 +140,7 @@ module.exports = function(app) {
       if(data === null) {
         return next(new Error(`Username ${username} not found`))
       }
-      
+
       data.exercises.push(newExercise)
       data.save((err, data) => {
         if (err) {
@@ -153,16 +153,28 @@ module.exports = function(app) {
       })
     })
   })
-  
+
   /*route for retrieving user/exercise info
     GET /exercise/log?{userId}[&from][&to][&limit]
-  .get - req, res => 
+  .get - req, res =>
   use req.query to retrieve info from db
   error response if not matched
   respond with json info if found
 
   */
+app.get('/api/exercise/log', (req, res, next) => {
+  const { username, from, to, limit } = req.query;
 
+  User.aggregate([{ $match: { username }},
+      { $unwind: '$exercises'},
+      { $match: {'exercises.date' : { $gte: new Date(from), $lte: new Date(to)}}},
+      { $limit: Number(limit) }
+    ])
+      .then(doc => {
+        console.log(doc);
+        res.json(doc);
+      })
+});
 
   ///////////////////////////////////////////////////////////
   // Default Route Handler
