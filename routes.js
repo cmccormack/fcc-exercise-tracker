@@ -191,6 +191,16 @@ app.get('/api/exercise/log', [
     .isNumeric({ no_symbols: true })
     .withMessage('Invalid Number')
 ], (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    errors.array().forEach(e => {
+      if((e.value !== undefined && e.param !== 'username') || e.param === 'username'){
+        const { param, msg: message, } = errors.array()[0]
+        return next({ param, message, })
+      }
+    })
+  }
+
   const { username, from = new Date(0), to = new Date(), limit = 100 } = req.query;
 
   User.aggregate([{ $match: { username }},
@@ -199,7 +209,6 @@ app.get('/api/exercise/log', [
       { $limit: Number(limit) }
     ])
       .then(doc => {
-        console.log(doc);
         res.json(doc);
       })
 });
