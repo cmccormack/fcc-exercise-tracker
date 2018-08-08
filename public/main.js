@@ -23,11 +23,11 @@ function updateQuery() {
     let toYear = toDate.split('-')[0];
 
     if(fromYear > 1970 && fromYear < 3000 && (fromDate<toDate || toDate === "")) {
-      newURL += `&fromDate=${fromDate}`;
+      newURL += `&from=${fromDate}`;
     }
 
-    if(toYear > 1970 && toYear < 3000 && toDate>fromDate) {
-      newURL += `&toDate=${toDate}`;
+    if(toYear > 1970 && toYear < 3000 && (toDate>fromDate || fromDate === "")) {
+      newURL += `&to=${toDate}`;
     }
 
     if(limit>=0 && limit<10000 && typeof(limit) === 'number') {
@@ -42,6 +42,8 @@ function updateQuery() {
 //listeners for input elements
 usernameElement.addEventListener('keyup',  (e) => { username =          e.target.value;  updateQuery(); });
 fromDateElement.addEventListener('keyup',  (e) => { fromDate =          e.target.value;  updateQuery(); });
+fromDateElement.addEventListener('change', (e) => { fromDate =          e.target.value;  updateQuery(); });
 toDateElement  .addEventListener('keyup',  (e) => { toDate   =          e.target.value;  updateQuery(); });
+toDateElement  .addEventListener('change', (e) => { toDate   =          e.target.value;  updateQuery(); });
 limitElement   .addEventListener('keyup',  (e) => { limit    = parseInt(e.target.value); updateQuery(); });
 limitElement   .addEventListener('change', (e) => { limit    = parseInt(e.target.value); updateQuery(); });
